@@ -1,5 +1,10 @@
 // Variables
 const bookForm = document.getElementById('book-form');
+const uiTitle = document.getElementById('title');
+const uiAuthor = document.getElementById('author');
+const uiIsbn = document.getElementById('isbn');
+
+// console.log(bookForm, uiTitle, uiAuthor, uiIsbn); // variables are connected
 
 // Book Constructor
 function Book(title, author, isbn) {
@@ -30,15 +35,22 @@ UI.prototype.addBookToList = function(book) {
   list.appendChild(row);
 };
 
+UI.prototype.clearFields = function() {
+  uiTitle.value = '';
+  uiAuthor.value = '';
+  uiIsbn.value = '';
+};
+
 // Event Listeners
 bookForm.addEventListener('submit', function(e) {
   // console.log('works?'); // YAY! test is successful
 
   // get user-entered form values
-  const title = document.getElementById('title').value,
-    author = document.getElementById('author').value,
-    isbn = document.getElementById('isbn').value;
+  const title = uiTitle.value,
+    author = uiAuthor.value,
+    isbn = uiIsbn.value;
   // console.log(title, author, isbn); // returns entered values
+  // these variables need to be declared so that they work in line with the Book constructor
 
   // Instantiate a new Book
   const book = new Book(title, author, isbn);
@@ -50,6 +62,9 @@ bookForm.addEventListener('submit', function(e) {
 
   // Add book to list
   userInterface.addBookToList(book);
+
+  // Clear form entry fields
+  userInterface.clearFields();
 
   e.preventDefault();
 });
