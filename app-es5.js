@@ -1,5 +1,6 @@
 // Variables
 const bookForm = document.getElementById('book-form');
+const list = document.getElementById('book-list');
 const uiTitle = document.getElementById('title');
 const uiAuthor = document.getElementById('author');
 const uiIsbn = document.getElementById('isbn');
@@ -38,7 +39,6 @@ UI.prototype.showAlert = function(mssg, className) {
 
 UI.prototype.addBookToList = function(book) {
   // console.log(book); // returns Book {title: "The funniest book ever", author: "Denise Netterfield", isbn: "1-23-4567890"}
-  const list = document.getElementById('book-list');
   // create tbale row with new Book
   const row = document.createElement('tr');
   // console.log(row);
@@ -51,6 +51,12 @@ UI.prototype.addBookToList = function(book) {
   `;
   // append the row to the tbody that was not populated in the html
   list.appendChild(row);
+};
+
+UI.prototype.deleteBook = function(target) {
+  if (target.className === 'delete') {
+    target.parentElement.parentElement.remove();
+  }
 };
 
 UI.prototype.clearFields = function() {
@@ -76,7 +82,7 @@ bookForm.addEventListener('submit', function(e) {
   // NOTE: book is not globally accessible outside of this anonymous function
 
   // Instantiate userInterface
-  const userInterface = new UI(); // referring to the UI constructor on line 13
+  const userInterface = new UI(); // referring to the UI constructor
 
   // Validate entries
   if (title === '' || author === '' || isbn === '') {
@@ -96,4 +102,17 @@ bookForm.addEventListener('submit', function(e) {
   e.preventDefault();
 });
 
-// TODO fix issue where multiple alerts can be inserted.
+// Event Listener for delete
+list.addEventListener('click', function(e) {
+  // console.log(123); // does react to clicks in the list area
+  // Instantiate userInterface
+  const userInterface = new UI(); // referring to the UI constructor
+
+  userInterface.deleteBook(e.target);
+
+  userInterface.showAlert('Book removed', 'success');
+
+  e.preventDefault();
+});
+
+// TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
