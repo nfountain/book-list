@@ -4,9 +4,6 @@ const list = document.getElementById('book-list');
 const uiTitle = document.getElementById('title');
 const uiAuthor = document.getElementById('author');
 const uiIsbn = document.getElementById('isbn');
-let alreadyAlerted;
-
-// console.log(bookForm, uiTitle, uiAuthor, uiIsbn); // variables are connected
 
 // Book Constructor
 function Book(title, author, isbn) {
@@ -16,7 +13,6 @@ function Book(title, author, isbn) {
 }
 
 // UI Constructor
-// prototype methods (add book, delete book, show alert) will be added to this constructor
 function UI() {}
 
 // UI Prototype Methods
@@ -38,10 +34,8 @@ UI.prototype.showAlert = function(mssg, className) {
 };
 
 UI.prototype.addBookToList = function(book) {
-  // console.log(book); // returns Book {title: "The funniest book ever", author: "Denise Netterfield", isbn: "1-23-4567890"}
-  // create tbale row with new Book
+  // create table row with new Book
   const row = document.createElement('tr');
-  // console.log(row);
   // insert columns
   row.innerHTML = `
     <td>${book.title}</td>
@@ -67,22 +61,16 @@ UI.prototype.clearFields = function() {
 
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
-  // console.log('works?'); // YAY! test is successful
-
   // get user-entered form values
   const title = uiTitle.value,
     author = uiAuthor.value,
     isbn = uiIsbn.value;
-  // console.log(title, author, isbn); // returns entered values
-  // these variables need to be declared so that they work in line with the Book constructor
 
   // Instantiate a new Book
   const book = new Book(title, author, isbn);
-  // console.log(book); // returns the book object with user entered values
-  // NOTE: book is not globally accessible outside of this anonymous function
 
   // Instantiate userInterface
-  const userInterface = new UI(); // referring to the UI constructor
+  const userInterface = new UI();
 
   // Validate entries
   if (title === '' || author === '' || isbn === '') {
@@ -91,10 +79,8 @@ bookForm.addEventListener('submit', function(e) {
   } else {
     // Add book to list
     userInterface.addBookToList(book);
-
     // show success
     userInterface.showAlert('Book Added!', 'success');
-
     // Clear form entry fields
     userInterface.clearFields();
   }
@@ -104,12 +90,9 @@ bookForm.addEventListener('submit', function(e) {
 
 // Event Listener for delete
 list.addEventListener('click', function(e) {
-  // console.log(123); // does react to clicks in the list area
   // Instantiate userInterface
-  const userInterface = new UI(); // referring to the UI constructor
-
+  const userInterface = new UI();
   userInterface.deleteBook(e.target);
-
   userInterface.showAlert('Book removed', 'success');
 
   e.preventDefault();
