@@ -19,7 +19,7 @@ function Book(title, author, isbn) {
 // prototype methods (add book, delete book, show alert) will be added to this constructor
 function UI() {}
 
-// Prototype Methods
+// UI Prototype Methods
 UI.prototype.showAlert = function(mssg, className) {
   // create div, add classes and textNode with message
   const div = document.createElement('div');
@@ -116,3 +116,4 @@ list.addEventListener('click', function(e) {
 });
 
 // TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
+// TODO event listener for delete message - does that pop up if I click anywhere???
