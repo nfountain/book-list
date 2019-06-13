@@ -4,10 +4,55 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <title>Book List</title>
+
+    <!-- Skeleton styles for base styling -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
   </head>
   <body>
+    <div class="container">
+      <h1>Add Book</h1>
+      <form id="book-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input id="title" class="u-full-width" type="text" />
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input id="author" class="u-full-width" type="text" />
+        </div>
+        <div class="form-group">
+          <label for="isbn">ISBN</label>
+          <input id="isbn" class="u-full-width" type="text" />
+        </div>
+      </form>
+
+      <hr />
+
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th></th>
+            <!-- where the delete link will go -->
+          </tr>
+        </thead>
+        <tbody id="book-list">
+          <!-- where the rows will be dynamically inserted using JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ES5 will be used initially, to facilitate understanding of the building blocks of the JS code. -->
     <script src="app-es5.js"></script>
-    <script src="app-es6.js"></script>
+    <!-- ES6 will be added to refactor and streamline the code. -->
+    <!-- <script src="app-es6.js"></script> -->
   </body>
 </html>
