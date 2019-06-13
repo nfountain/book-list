@@ -3,6 +3,7 @@ const bookForm = document.getElementById('book-form');
 const uiTitle = document.getElementById('title');
 const uiAuthor = document.getElementById('author');
 const uiIsbn = document.getElementById('isbn');
+let alreadyAlerted;
 
 // console.log(bookForm, uiTitle, uiAuthor, uiIsbn); // variables are connected
 
@@ -18,6 +19,23 @@ function Book(title, author, isbn) {
 function UI() {}
 
 // Prototype Methods
+UI.prototype.showAlert = function(mssg, className) {
+  // create div, add classes and textNode with message
+  const div = document.createElement('div');
+  div.className = `alert ${className}`;
+  div.appendChild(document.createTextNode(mssg));
+  // attach div to insert alert
+  const container = document.querySelector('.container');
+  const form = document.getElementById('book-form');
+  container.insertBefore(div, form);
+  alreadyAlerted = true;
+  // timeout after 3 seconds
+  setTimeout(function() {
+    document.querySelector('.alert').remove();
+    alreadyAlerted = false;
+  }, 3000);
+};
+
 UI.prototype.addBookToList = function(book) {
   // console.log(book); // returns Book {title: "The funniest book ever", author: "Denise Netterfield", isbn: "1-23-4567890"}
   const list = document.getElementById('book-list');
@@ -41,7 +59,7 @@ UI.prototype.clearFields = function() {
   uiIsbn.value = '';
 };
 
-// Event Listeners
+// Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
   // console.log('works?'); // YAY! test is successful
 
@@ -60,11 +78,22 @@ bookForm.addEventListener('submit', function(e) {
   // Instantiate userInterface
   const userInterface = new UI(); // referring to the UI constructor on line 13
 
-  // Add book to list
-  userInterface.addBookToList(book);
+  // Validate entries
+  if (title === '' || author === '' || isbn === '') {
+    // Error alert
+    userInterface.showAlert('Please fill in all of the fields', 'error');
+  } else {
+    // Add book to list
+    userInterface.addBookToList(book);
 
-  // Clear form entry fields
-  userInterface.clearFields();
+    // show success
+    userInterface.showAlert('Book Added!', 'success');
+
+    // Clear form entry fields
+    userInterface.clearFields();
+  }
 
   e.preventDefault();
 });
+
+// TODO fix issue where multiple alerts can be inserted.
