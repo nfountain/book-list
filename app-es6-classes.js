@@ -48,17 +48,15 @@ class UI {
   }
 
   deleteBook(target) {
-    if (target.className === 'delete') {
-      target.parentElement.parentElement.remove();
-    }
+    target.parentElement.parentElement.remove();
   }
 }
 
 // Local Storage class
 class Store {
-  static checkWorks() {
-    return `yes it works`;
-  }
+  // static checkWorks() {
+  //   return `yes it works`;
+  // }
 
   static getBooks() {
     // initialize local variable
@@ -75,16 +73,19 @@ class Store {
   static displayBooks() {}
 
   static addBook(book) {
+    // get any books in memory
     const books = Store.getBooks();
-
+    // add book and set local storage
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
   }
 
-  static removeBook() {}
+  static removeBook(isbn) {
+    console.log(isbn);
+  }
 }
 
-console.log(Store.checkWorks());
+// console.log(Store.checkWorks());
 
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
@@ -121,13 +122,16 @@ bookForm.addEventListener('submit', function(e) {
 // Event Listener for delete
 list.addEventListener('click', function(e) {
   // Instantiate userInterface
-  const userInterface = new UI();
+  if (e.target.className === 'delete') {
+    const userInterface = new UI();
 
-  userInterface.deleteBook(e.target);
-  userInterface.showAlert('Book removed', 'success');
+    userInterface.deleteBook(e.target);
 
-  e.preventDefault();
+    Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+    userInterface.showAlert('Book removed', 'success');
+
+    e.preventDefault();
+  }
 });
 
 // TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
-// TODO event listener for delete message - does that pop up if I click anywhere???
