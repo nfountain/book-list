@@ -54,6 +54,38 @@ class UI {
   }
 }
 
+// Local Storage class
+class Store {
+  static checkWorks() {
+    return `yes it works`;
+  }
+
+  static getBooks() {
+    // initialize local variable
+    let books;
+    if (localStorage.getItem('books') === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem('books'));
+    }
+
+    return books;
+  }
+
+  static displayBooks() {}
+
+  static addBook(book) {
+    const books = Store.getBooks();
+
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+  static removeBook() {}
+}
+
+console.log(Store.checkWorks());
+
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
   // get user-entered form values
@@ -74,7 +106,8 @@ bookForm.addEventListener('submit', function(e) {
   } else {
     // Add book to list
     userInterface.addBookToList(book);
-
+    // Add to local storage
+    Store.addBook(book);
     // show success
     userInterface.showAlert('Book Added!', 'success');
 
