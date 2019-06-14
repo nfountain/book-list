@@ -48,9 +48,9 @@ UI.prototype.addBookToList = function(book) {
 };
 
 UI.prototype.deleteBook = function(target) {
-  if (target.className === 'delete') {
-    target.parentElement.parentElement.remove();
-  }
+  // if (target.className === 'delete') {
+  target.parentElement.parentElement.remove();
+  // }
 };
 
 UI.prototype.clearFields = function() {
@@ -90,13 +90,14 @@ bookForm.addEventListener('submit', function(e) {
 
 // Event Listener for delete
 list.addEventListener('click', function(e) {
-  // Instantiate userInterface
-  const userInterface = new UI();
-  userInterface.deleteBook(e.target);
-  userInterface.showAlert('Book removed', 'success');
+  if (e.target.className === 'delete') {
+    // Instantiate userInterface
+    const userInterface = new UI();
+    userInterface.deleteBook(e.target);
+    userInterface.showAlert('Book removed', 'success');
 
-  e.preventDefault();
+    e.preventDefault();
+  }
 });
 
 // TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
-// TODO event listener for delete message - does that pop up if I click anywhere???
