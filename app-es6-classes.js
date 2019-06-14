@@ -70,7 +70,18 @@ class Store {
     return books;
   }
 
-  static displayBooks() {}
+  static displayBooks() {
+    const books = Store.getBooks(); // works
+
+    books.forEach(function(book) {
+      // Instantiate userInterface
+      const userInterface = new UI();
+      // Add book to UI
+      userInterface.addBookToList(book);
+    });
+
+    return books;
+  }
 
   static addBook(book) {
     // get any books in memory
@@ -85,7 +96,7 @@ class Store {
   }
 }
 
-// console.log(Store.checkWorks());
+console.log(Store.checkWorks); // works
 
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
@@ -133,5 +144,8 @@ list.addEventListener('click', function(e) {
     e.preventDefault();
   }
 });
+
+// DOM Load event
+document.addEventListener('DOMContentLoaded', Store.displayBooks);
 
 // TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
