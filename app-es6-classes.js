@@ -54,10 +54,6 @@ class UI {
 
 // Local Storage class
 class Store {
-  // static checkWorks() {
-  //   return `yes it works`;
-  // }
-
   static getBooks() {
     // initialize local variable
     let books;
@@ -71,7 +67,7 @@ class Store {
   }
 
   static displayBooks() {
-    const books = Store.getBooks(); // works
+    const books = Store.getBooks();
 
     books.forEach(function(book) {
       // Instantiate userInterface
@@ -92,7 +88,6 @@ class Store {
   }
 
   static removeBook(isbn) {
-    // console.log(isbn); // works
     const books = Store.getBooks();
 
     books.forEach(function(book, index) {
@@ -105,7 +100,7 @@ class Store {
   }
 }
 
-console.log(Store.checkWorks); // works
+// Event Listeners
 
 // DOM Load event
 document.addEventListener('DOMContentLoaded', Store.displayBooks);
@@ -132,9 +127,8 @@ bookForm.addEventListener('submit', function(e) {
     userInterface.addBookToList(book);
     // Add to local storage
     Store.addBook(book);
-    // show success
+    // show success message
     userInterface.showAlert('Book Added!', 'success');
-
     // Clear form entry fields
     userInterface.clearFields();
   }
@@ -147,10 +141,11 @@ list.addEventListener('click', function(e) {
   // Instantiate userInterface
   if (e.target.className === 'delete') {
     const userInterface = new UI();
-
+    // remove book from UI
     userInterface.deleteBook(e.target);
-
+    // remove book from local storage
     Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
+    // show success message
     userInterface.showAlert('Book removed', 'success');
 
     e.preventDefault();

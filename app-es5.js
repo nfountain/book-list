@@ -43,14 +43,12 @@ UI.prototype.addBookToList = function(book) {
     <td>${book.isbn}</td>
     <td><a href="#" class="delete">X</a></td>
   `;
-  // append the row to the tbody that was not populated in the html
+  // append the row
   list.appendChild(row);
 };
 
 UI.prototype.deleteBook = function(target) {
-  // if (target.className === 'delete') {
   target.parentElement.parentElement.remove();
-  // }
 };
 
 UI.prototype.clearFields = function() {
@@ -61,7 +59,7 @@ UI.prototype.clearFields = function() {
 
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
-  // get user-entered form values
+  // get user-entered values from form
   const title = uiTitle.value,
     author = uiAuthor.value,
     isbn = uiIsbn.value;
@@ -84,14 +82,14 @@ bookForm.addEventListener('submit', function(e) {
     // Clear form entry fields
     userInterface.clearFields();
   }
-
+  // Prevent the form from submitting (refreshing the page)
   e.preventDefault();
 });
 
 // Event Listener for delete
 list.addEventListener('click', function(e) {
   if (e.target.className === 'delete') {
-    // Instantiate userInterface
+    // Instantiate userInterface, delete the book and show success message
     const userInterface = new UI();
     userInterface.deleteBook(e.target);
     userInterface.showAlert('Book removed', 'success');
