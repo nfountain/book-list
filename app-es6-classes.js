@@ -92,11 +92,23 @@ class Store {
   }
 
   static removeBook(isbn) {
-    console.log(isbn);
+    // console.log(isbn); // works
+    const books = Store.getBooks();
+
+    books.forEach(function(book, index) {
+      if (book.isbn === isbn) {
+        books.splice(index, 1);
+      }
+    });
+
+    localStorage.setItem('books', JSON.stringify(books));
   }
 }
 
 console.log(Store.checkWorks); // works
+
+// DOM Load event
+document.addEventListener('DOMContentLoaded', Store.displayBooks);
 
 // Event Listener for Add Book
 bookForm.addEventListener('submit', function(e) {
@@ -144,8 +156,5 @@ list.addEventListener('click', function(e) {
     e.preventDefault();
   }
 });
-
-// DOM Load event
-document.addEventListener('DOMContentLoaded', Store.displayBooks);
 
 // TODO fix issue where multiple alerts can be inserted (my preference would be to have new messages blink in and override the previous message).
